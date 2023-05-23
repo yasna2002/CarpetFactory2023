@@ -1,3 +1,15 @@
+distances = []
+pathes = []
+
+
+def printSolution(dist, end, distance_result):
+    """""
+    print(dist[end])
+    print(*distance_result)
+    """""
+    distances.append(dist[end])
+    pathes.append(distance_result)
+
 
 class Graph:
 
@@ -5,11 +17,6 @@ class Graph:
         self.V = vertices
         self.graph = [[0 for column in range(vertices)]
                       for row in range(vertices)]
-
-    def printSolution(self, dist, end, distance_result):
-
-        print(dist[end])
-        print(*distance_result)
 
     def minDistance(self, dist, sptSet):
 
@@ -44,7 +51,7 @@ class Graph:
             if u == end:
                 break
 
-        self.printSolution(dist, end, distance_result)
+        printSolution(dist, end, distance_result)
 
 
 if __name__ == '__main__':
@@ -53,21 +60,29 @@ if __name__ == '__main__':
     g = Graph(number_of_intersections)
 
     intersections = ["Vokala", "Freiburg", "Azadi", "Enghelab", "Shariati", "Taleghani", "Afarinesh",
-                     "Valiasr", "Emam","Jomhori","Shohada","Takhti","Daneshgah","Bahonar","Baharestan"]
+                     "Valiasr", "Emam", "Jomhori", "Shohada", "Takhti", "Daneshgah", "Bahonar", "Baharestan"]
 
     number_of_streets = 24
 
-    streets = [["Vokala","Freiburg","300"],["Vokala","Enghelab","200"],["Vokala","Valiasr","100"],
-               ["Freiburg","Azadi","400"],["Azadi","Shariati","250"],["Freiburg","Shariati","350"],
-               ["Freiburg","Taleghani","280"],["Taleghani","Valiasr","330"],["Valiasr","Emam","360"],
-               ["Valiasr","Jomhori","500"],["Emam","Jomhori","450"],["Emam","Baharestan","900"],
-               ["Jomhori","Baharestan","800"],["Bahonar","Baharestan","700"],["Bahonar","Daneshgah","300"],
-               ["Bahonar","Takhti","400"],["Bahonar","Jomhori","650"],["Takhti","Daneshgah","250"],
-               ["Takhti","Shohada","500"],["Daneshgah","Shohada","200"],["Taleghani","Shohada","950"],
-               ["Afarinesh","Shohada","400"],["Shariati","Afarinesh","150"],["Enghelab","Taleghani","250"]]
+    streets = [["Vokala", "Freiburg", "300"], ["Vokala", "Enghelab", "200"], ["Vokala", "Valiasr", "100"],
+               ["Freiburg", "Azadi", "400"], ["Azadi", "Shariati", "250"], ["Freiburg", "Shariati", "350"],
+               ["Freiburg", "Taleghani", "280"], ["Taleghani", "Valiasr", "330"], ["Valiasr", "Emam", "360"],
+               ["Valiasr", "Jomhori", "500"], ["Emam", "Jomhori", "450"], ["Emam", "Baharestan", "900"],
+               ["Jomhori", "Baharestan", "800"], ["Bahonar", "Baharestan", "700"], ["Bahonar", "Daneshgah", "300"],
+               ["Bahonar", "Takhti", "400"], ["Bahonar", "Jomhori", "650"], ["Takhti", "Daneshgah", "250"],
+               ["Takhti", "Shohada", "500"], ["Daneshgah", "Shohada", "200"], ["Taleghani", "Shohada", "950"],
+               ["Afarinesh", "Shohada", "400"], ["Shariati", "Afarinesh", "150"], ["Enghelab", "Taleghani", "250"]]
 
-    start_end = input().split(" ")
-    start_end = [str(x) for x in start_end]
+    number_of_branches = 5
+    branches = {
+        1: "Vokala",
+        2: "Shohada",
+        3: "Taleghani",
+        4: "Emam",
+        5: "Azadi"
+    }
+
+    start = input("Your location : ")
 
     g.graph = []
     for city in intersections:
@@ -84,4 +99,8 @@ if __name__ == '__main__':
 
         g.graph.append(list)
 
-    g.dijkstra(intersections.index(start_end[0]), intersections.index(start_end[1]), intersections)
+    for intersection in branches.values():
+        g.dijkstra(intersections.index(start), intersections.index(intersection), intersections)
+    min_distance = min(distances)
+    print(min_distance)
+    print(*pathes[distances.index(min_distance)])
