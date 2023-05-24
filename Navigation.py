@@ -52,13 +52,6 @@ def dijkstra(graph, source, destination):
 
 if __name__ == '__main__':
 
-    number_of_intersections = 15
-
-    intersections = ["Vokala", "Freiburg", "Azadi", "Enghelab", "Shariati", "Taleghani", "Afarinesh",
-                     "Valiasr", "Emam", "Jomhori", "Shohada", "Takhti", "Daneshgah", "Bahonar", "Baharestan"]
-
-    number_of_streets = 24
-
     graph = {
         'Vokala': {'Freiburg': 300, 'Enghelab': 200, 'Valiasr': 100},
         'Freiburg': {'Vokala': 300, 'Azadi': 400, 'Shariati': 350, 'Taleghani': 280},
@@ -77,7 +70,6 @@ if __name__ == '__main__':
         'Baharestan': {'Emam': 900, 'Jomhori': 800, 'Bahonar': 700}
     }
 
-    number_of_branches = 5
     branches = {
         'Vokala': 1,
         'Emam': 2,
