@@ -28,9 +28,8 @@ if __name__ == '__main__':
         key = vertex_list.pop(0)
         areas[key] = vertex_list
 
-    #list_of_carpets = []
     colored_carpet = (colour_vertices(areas))
-    #list_of_carpets.append(colored_carpet)
+
     max = 0
     for i in colored_carpet.values():
         if i > max:
