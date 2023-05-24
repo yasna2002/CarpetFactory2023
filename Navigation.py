@@ -1,50 +1,42 @@
 import heapq
 
 
-def dijkstra(graph, source, destination):
-    # Create a dictionary to store the distance from the source to each node
-    distances = {node: float('inf') for node in graph}
-    distances[source] = 0
+def dijkstra(intersections, start, end):
 
-    # Create a dictionary to store the previous node in the shortest path
-    previous = {node: None for node in graph}
+    distances = {node: float('inf') for node in intersections}
+    distances[start] = 0
 
-    # Create a priority queue to store nodes and their tentative distances
-    priority_queue = [(0, source)]
+    pre = {node: None for node in intersections}
+
+    priority_queue = [(0, start)]
 
     while priority_queue:
-        # Pop the node with the smallest tentative distance from the priority queue
         current_distance, current_node = heapq.heappop(priority_queue)
 
-        # Stop if we reach the destination
-        if current_node == destination:
+        if current_node == end:
             break
 
-        # Skip if the current distance is greater than the stored distance
         if current_distance > distances[current_node]:
             continue
 
-        # Explore the neighbors of the current node
-        for neighbor, weight in graph[current_node].items():
-            distance = current_distance + weight
+        for neighbor, weight in intersections[current_node].items():
+            new_distance = current_distance + weight
 
-            # If a shorter path is found, update the distance and previous node
-            if distance < distances[neighbor]:
-                distances[neighbor] = distance
-                previous[neighbor] = current_node
-                heapq.heappush(priority_queue, (distance, neighbor))
+            if new_distance < distances[neighbor]:
+                distances[neighbor] = new_distance
+                pre[neighbor] = current_node
+                heapq.heappush(priority_queue, (new_distance, neighbor))
 
-    # Build the shortest path from source to destination
     path = []
-    current_node = destination
+    current_node = end
 
     while current_node:
         path.append(current_node)
-        current_node = previous[current_node]
+        current_node = pre[current_node]
 
     path.reverse()
 
-    return distances[destination], path
+    return distances[end], path
 
 
 if __name__ == '__main__':
@@ -75,14 +67,14 @@ if __name__ == '__main__':
 
     start = input("Your location : ")
     distances = []
-    pathes = []
+    paths = []
 
     for intersection in branches.keys():
         distance, path = dijkstra(intersections, start, intersection)
         distances.append(distance)
-        pathes.append(path)
+        paths.append(path)
     min_distance = min(distances)
     print("Minimum distance :", min_distance)
-    branch = branches[pathes[distances.index(min_distance)][-1]]
-    print("You can go to branch", branch, "in", pathes[distances.index(min_distance)][-1], "intersection")
-    print("Here is the path :", *pathes[distances.index(min_distance)])
+    branch = branches[paths[distances.index(min_distance)][-1]]
+    print("You can go to branch", branch, "in", paths[distances.index(min_distance)][-1], "intersection")
+    print("Here is the path :", *paths[distances.index(min_distance)])
