@@ -1,8 +1,5 @@
 import heapq
 
-distances = []
-pathes = []
-
 
 def dijkstra(graph, source, destination):
     # Create a dictionary to store the distance from the source to each node
@@ -52,7 +49,7 @@ def dijkstra(graph, source, destination):
 
 if __name__ == '__main__':
 
-    graph = {
+    intersections = {
         'Vokala': {'Freiburg': 300, 'Enghelab': 200, 'Valiasr': 100},
         'Freiburg': {'Vokala': 300, 'Azadi': 400, 'Shariati': 350, 'Taleghani': 280},
         'Azadi': {'Freiburg': 400, 'Shariati': 250, 'Valiasr': 100},
@@ -77,9 +74,11 @@ if __name__ == '__main__':
     }
 
     start = input("Your location : ")
+    distances = []
+    pathes = []
 
     for intersection in branches.keys():
-        distance, path = dijkstra(graph, start, intersection)
+        distance, path = dijkstra(intersections, start, intersection)
         distances.append(distance)
         pathes.append(path)
     min_distance = min(distances)
