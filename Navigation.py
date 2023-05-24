@@ -1,106 +1,97 @@
+import heapq
+
 distances = []
 pathes = []
 
 
-def printSolution(dist, end, distance_result):
-    """""
-    print(dist[end])
-    print(*distance_result)
-    """""
-    distances.append(dist[end])
-    pathes.append(distance_result)
+def dijkstra(graph, source, destination):
+    # Create a dictionary to store the distance from the source to each node
+    distances = {node: float('inf') for node in graph}
+    distances[source] = 0
 
+    # Create a dictionary to store the previous node in the shortest path
+    previous = {node: None for node in graph}
 
-class Graph:
+    # Create a priority queue to store nodes and their tentative distances
+    priority_queue = [(0, source)]
 
-    def __init__(self, vertices):
-        self.V = vertices
-        self.graph = [[0 for column in range(vertices)]
-                      for row in range(vertices)]
+    while priority_queue:
+        # Pop the node with the smallest tentative distance from the priority queue
+        current_distance, current_node = heapq.heappop(priority_queue)
 
-    def minDistance(self, dist, sptSet):
+        # Stop if we reach the destination
+        if current_node == destination:
+            break
 
-        min = 1e7
+        # Skip if the current distance is greater than the stored distance
+        if current_distance > distances[current_node]:
+            continue
 
-        for v in range(self.V):
-            if dist[v] < min and sptSet[v] == False:
-                min = dist[v]
-                min_index = v
+        # Explore the neighbors of the current node
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
 
-        return min_index
+            # If a shorter path is found, update the distance and previous node
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                previous[neighbor] = current_node
+                heapq.heappush(priority_queue, (distance, neighbor))
 
-    def dijkstra(self, start, end, cities):
+    # Build the shortest path from source to destination
+    path = []
+    current_node = destination
 
-        dist = [1e7] * self.V
-        dist[start] = 0
-        sptSet = [False] * self.V
-        distance_result = []
+    while current_node:
+        path.append(current_node)
+        current_node = previous[current_node]
 
-        for cout in range(self.V):
+    path.reverse()
 
-            u = self.minDistance(dist, sptSet)
-
-            sptSet[u] = True
-
-            for v in range(self.V):
-                if (self.graph[u][v] > 0 and
-                        sptSet[v] == False and
-                        dist[v] > dist[u] + self.graph[u][v]):
-                    dist[v] = dist[u] + self.graph[u][v]
-            distance_result.append(cities[u])
-            if u == end:
-                break
-
-        printSolution(dist, end, distance_result)
+    return distances[destination], path
 
 
 if __name__ == '__main__':
 
     number_of_intersections = 15
-    g = Graph(number_of_intersections)
 
     intersections = ["Vokala", "Freiburg", "Azadi", "Enghelab", "Shariati", "Taleghani", "Afarinesh",
                      "Valiasr", "Emam", "Jomhori", "Shohada", "Takhti", "Daneshgah", "Bahonar", "Baharestan"]
 
     number_of_streets = 24
 
-    streets = [["Vokala", "Freiburg", "300"], ["Vokala", "Enghelab", "200"], ["Vokala", "Valiasr", "100"],
-               ["Freiburg", "Azadi", "400"], ["Azadi", "Shariati", "250"], ["Freiburg", "Shariati", "350"],
-               ["Freiburg", "Taleghani", "280"], ["Taleghani", "Valiasr", "330"], ["Valiasr", "Emam", "360"],
-               ["Valiasr", "Jomhori", "500"], ["Emam", "Jomhori", "450"], ["Emam", "Baharestan", "900"],
-               ["Jomhori", "Baharestan", "800"], ["Bahonar", "Baharestan", "700"], ["Bahonar", "Daneshgah", "300"],
-               ["Bahonar", "Takhti", "400"], ["Bahonar", "Jomhori", "650"], ["Takhti", "Daneshgah", "250"],
-               ["Takhti", "Shohada", "500"], ["Daneshgah", "Shohada", "200"], ["Taleghani", "Shohada", "950"],
-               ["Afarinesh", "Shohada", "400"], ["Shariati", "Afarinesh", "150"], ["Enghelab", "Taleghani", "250"]]
+    graph = {
+        'Vokala': {'Freiburg': 300, 'Enghelab': 200, 'Valiasr': 100},
+        'Freiburg': {'Vokala': 300, 'Azadi': 400, 'Shariati': 350, 'Taleghani': 280},
+        'Azadi': {'Freiburg': 400, 'Shariati': 250, 'Valiasr': 100},
+        'Enghelab': {'Vokala': 200, 'Taleghani': 250},
+        'Shariati': {'Azadi': 250, 'Freiburg': 350, 'Afarinesh': 150},
+        'Taleghani': {'Freiburg': 280, 'Valiasr': 330, 'Shohada': 950},
+        'Afarinesh': {'Shohada': 400, 'Shariati': 150},
+        'Valiasr': {'Vokala': 100, 'Taleghani': 330, 'Emam': 360, 'Jomhori': 500},
+        'Emam': {'Valiasr': 360, 'Jomhori': 450, 'Baharestan': 900},
+        'Jomhori': {'Valiasr': 500, 'Emam': 450, 'Baharestan': 800, 'Bahonar': 650},
+        'Shohada': {'Takhti': 500, 'Daneshgah': 200, 'Taleghani': 950, 'Afarinesh': 400},
+        'Takhti': {'Daneshgah': 250, 'Bahonar': 400, 'Shohada': 500},
+        'Daneshgah': {'Bahonar': 300, 'Takhti': 250, 'Shohada': 200},
+        'Bahonar': {'Baharestan': 700, 'Daneshgah': 300, 'Jomhori': 650, 'Takhti': 400},
+        'Baharestan': {'Emam': 900, 'Jomhori': 800, 'Bahonar': 700}
+    }
 
     number_of_branches = 5
     branches = {
-        1: "Vokala",
-        2: "Shohada",
-        3: "Taleghani",
-        4: "Emam",
-        5: "Azadi"
+        'Vokala': 1,
+        'Emam': 2,
+        'Azadi': 3
     }
 
     start = input("Your location : ")
 
-    g.graph = []
-    for city in intersections:
-        list = []
-        for i in range(number_of_intersections):
-            list.append(0)
-        for i in range(number_of_streets):
-            if city == streets[i][0]:
-                index = intersections.index(streets[i][1])
-                list[index] = int(streets[i][2])
-            elif city == streets[i][1]:
-                index = intersections.index(streets[i][0])
-                list[index] = int(streets[i][2])
-
-        g.graph.append(list)
-
-    for intersection in branches.values():
-        g.dijkstra(intersections.index(start), intersections.index(intersection), intersections)
+    for intersection in branches.keys():
+        distance, path = dijkstra(graph, start, intersection)
+        distances.append(distance)
+        pathes.append(path)
     min_distance = min(distances)
-    print(min_distance)
-    print(*pathes[distances.index(min_distance)])
+    print("Minimum distance :", min_distance)
+    branch = branches[pathes[distances.index(min_distance)][-1]]
+    print("You can go to branch", branch, "in", pathes[distances.index(min_distance)][-1], "intersection")
+    print("Here is the path :", *pathes[distances.index(min_distance)])
