@@ -60,7 +60,6 @@ if __name__ == '__main__':
         carpets = [600, 300, 300, 500, 600, 400, 250, 150, 450]
         customer_money = int(input())
         n = len(carpets)
-
         most_carpet(customer_money, carpets, n)
 
     if option == 4:  # ....................................................................... option 4
