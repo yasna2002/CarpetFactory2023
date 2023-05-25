@@ -25,11 +25,3 @@ def most_carpet(money, carpets, number_of_carpets):
 
             res = res - 1
             m = m - carpets[i - 1]
-
-
-if __name__ == '__main__':
-    carpets = [600, 300, 300, 500, 600, 400, 250, 150, 450]
-    customer_money = int(input())
-    n = len(carpets)
-
-    most_carpet(customer_money, carpets, n)
