@@ -39,15 +39,22 @@ if __name__ == '__main__':
 
         print("\n----------------------------Search a carpet----------------------------")
 
-        matrix1 = np.random.randint(0, 5, size=(300, 400))
-        matrix2 = np.random.randint(0, 5, size=(300, 400))
+        print("The carpet you want to search is : \n")
+        entry_carpet = np.random.randint(1, 4, size=(300, 400))
+        print(entry_carpet)
+        list_of_carpets = []
+        for i in range(10):  # it makes 10 different carpets
+            list_of_carpets.append(np.random.randint(1, 4, size=(300, 400)))
 
-        print(matrix1)
-        print(matrix2)
+        list_of_percentages = []
+        for carpet in list_of_carpets:  # obtaining matching percentage
+            list_of_percentages.append(Search.carpet_match_percentage(entry_carpet, carpet))
 
-        percentage = Search.matrix_match_percentage(matrix1, matrix2)
-
-        print(f"Percentage match: {percentage}%")
+        sorted_percentages = Search.quicksort_high_to_low(list_of_percentages)
+        for i in range(1, 4):  # printing top 3 matched carpets
+            index_of_carpet = list_of_percentages.index(sorted_percentages[i])
+            print("\nmatching carpet", i, "with", "%.3f" % sorted_percentages[i], "% match:\n\n",
+                  list_of_carpets[index_of_carpet])
 
     if option == 4:  # ....................................................................... option 4
 
