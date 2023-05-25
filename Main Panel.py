@@ -3,6 +3,7 @@ import numpy as np
 import Design
 import Navigation
 import Search
+from selling import most_carpet
 
 if __name__ == '__main__':
     print(".-. Welcome To CARPET FACTORY .-.\n")
@@ -53,6 +54,14 @@ if __name__ == '__main__':
             index_of_carpet = list_of_percentages.index(sorted_percentages[i])
             print("\nmatching carpet", i, "with", "%.3f" % sorted_percentages[i], "% match:\n\n",
                   list_of_carpets[index_of_carpet])
+
+    if option == 3:  # ....................................................................... option 3
+
+        carpets = [600, 300, 300, 500, 600, 400, 250, 150, 450]
+        customer_money = int(input())
+        n = len(carpets)
+
+        most_carpet(customer_money, carpets, n)
 
     if option == 4:  # ....................................................................... option 4
 

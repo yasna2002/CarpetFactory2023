@@ -15,4 +15,3 @@ def color_carpet(areas):
                 break
 
     return colour_graph
-
