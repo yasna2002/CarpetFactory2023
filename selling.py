@@ -12,7 +12,7 @@ def most_carpet(money, carpets, number_of_carpets):
                 store[i][m] = store[i - 1][m]
 
     res = store[number_of_carpets][money]
-    print(res)
+    print("You can buy", res, "carpets")
 
     m = money
     for i in range(number_of_carpets, 0, -1):
