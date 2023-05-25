@@ -15,7 +15,7 @@ def carpet_match_percentage(matrix1, matrix2):
     # Calculate the percentage match
     percentage_match = (matching_elements / total_elements) * 100
 
-    return percentage_match+50
+    return percentage_match
 
 
 def quicksort_high_to_low(arr):
