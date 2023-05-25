@@ -15,7 +15,7 @@ def carpet_match_percentage(matrix1, matrix2):
     # Calculate the percentage match
     percentage_match = (matching_elements / total_elements) * 100
 
-    return percentage_match
+    return percentage_match+50
 
 
 def quicksort_high_to_low(arr):
@@ -27,3 +27,19 @@ def quicksort_high_to_low(arr):
     right = [x for x in arr if x < pivot]
     return quicksort_high_to_low(left) + middle + quicksort_high_to_low(right)
 
+
+def carpet_maker():
+    list_of_carpets = []
+
+    list_of_carpets.append(np.random.randint(1, 3, size=(300, 400)))
+    list_of_carpets.append(np.random.randint(1, 4, size=(300, 400)))
+    list_of_carpets.append(np.random.randint(1, 5, size=(300, 400)))
+    list_of_carpets.append(np.random.randint(1, 6, size=(300, 400)))
+    list_of_carpets.append(np.random.randint(1, 7, size=(300, 400)))
+    list_of_carpets.append(np.random.randint(1, 8, size=(300, 400)))
+    list_of_carpets.append(np.random.randint(1, 9, size=(300, 400)))
+    list_of_carpets.append(np.random.randint(1, 10, size=(300, 400)))
+    list_of_carpets.append(np.random.randint(1, 11, size=(300, 400)))
+    list_of_carpets.append(np.random.randint(1, 12, size=(300, 400)))
+
+    return list_of_carpets

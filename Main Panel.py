@@ -42,9 +42,7 @@ if __name__ == '__main__':
         print("The carpet you want to search is : \n")
         entry_carpet = np.random.randint(1, 4, size=(300, 400))
         print(entry_carpet)
-        list_of_carpets = []
-        for i in range(10):  # it makes 10 different carpets
-            list_of_carpets.append(np.random.randint(1, 4, size=(300, 400)))
+        list_of_carpets = Search.carpet_maker()
 
         list_of_percentages = []
         for carpet in list_of_carpets:  # obtaining matching percentage
