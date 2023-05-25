@@ -60,6 +60,7 @@ if __name__ == '__main__':
         print("\n----------------------------Buy a Carpet----------------------------")
 
         carpets = [600, 300, 300, 500, 600, 400, 250, 150, 450]
+
         print("Your Budget: ")
         customer_money = int(input())
         n = len(carpets)
