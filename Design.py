@@ -1,4 +1,4 @@
-def colour_vertices(areas):
+def color_carpet(areas):
     vertices = sorted((list(areas.keys())))
     colour_graph = {}
 
@@ -19,20 +19,20 @@ def colour_vertices(areas):
 
 if __name__ == '__main__':
 
-    areas = dict()
+    map_of_carpet = dict()
     n = int(input("number of areas : "))
     print("enter areas related to each other with the following format :"
           " a b c ... \na : main vertex")
-    for i in range(n):
+    for i in range(n): # creating map_of_carpet dict
         vertex_list = input().split()
         key = vertex_list.pop(0)
-        areas[key] = vertex_list
+        map_of_carpet[key] = vertex_list
 
-    colored_carpet = (colour_vertices(areas))
+    colored_areas = (color_carpet(map_of_carpet)) # a dict of colored areas
 
-    max = 0
-    for i in colored_carpet.values():
-        if i > max:
-            max = i
-    print("Maximum color needed to color the carpet : ", max + 1)
-    print(colored_carpet)
+    max_color = 0
+    for i in colored_areas.values(): # finding maximum color needed to color the carpet
+        if i > max_color:
+            max_color = i
+    print("Maximum color needed to color the carpet : ", max_color + 1)
+    print(colored_areas)
